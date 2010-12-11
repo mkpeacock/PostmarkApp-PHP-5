@@ -223,7 +223,7 @@ class Postmark{
 	 */
 	public function addAttachment( $fileName, $fileContents, $mimeType='' )
 	{
-		$ext = substr( strrchr( $fileName, '.' ), 1 );
+		$ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 		if( array_key_exists( $ext, $this->allowedAttachmentTypes ) )
 		{
 			$size = strlen( $fileContents );
