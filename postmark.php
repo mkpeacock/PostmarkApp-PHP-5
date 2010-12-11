@@ -237,7 +237,7 @@ class Postmark{
 		$this->totalAttachmentsSize +=  $size;
 		
 		if(null === $mimeType){
-			$mimeType = 'application/octet-stream';
+			$mimeType = $this->allowedAttachmentTypes[$ext];
 		}
 		
 		array_push(
