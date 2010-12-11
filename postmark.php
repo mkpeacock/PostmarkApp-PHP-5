@@ -15,7 +15,7 @@ class Postmark{
 	private $apiEndPoint = 'http://api.postmarkapp.com/email';
 	
 	/**
-	 * API Key
+	 * API Key [defauly is the test API key]
 	 * @var String
 	 */
 	private $apiKey = 'POSTMARK_API_TEST';
@@ -78,15 +78,16 @@ class Postmark{
 	
 	/**
 	 * Allowed attachment file types see: http://developer.postmarkapp.com/developer-build.html#attachments
+	 * - and where appropriate, their corresponding mimetypes
 	 * @var array
 	 */
-	private $allowedAttachmentTypes = array();
+	private $allowedAttachmentTypes = array( 'gif' => 'image/gif', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'swf' => 'application/x-shockwave-flash', 'flv' => 'video/x-flv', 'avi' => 'video/x-msvideo', 'mpg' => 'video/mpeg', 'mp3' => 'audio/mpeg', 'rm' => 'application/vnd.rn-realmedia', 'mov' => 'video/quicktime', 'psd' => 'image/psd', 'ai' => 'application/postscript', 'tif' => 'image/tiff', 'tiff' => 'image/tiff', 'txt' => 'text/plain', 'rtf' => 'text/richtext', 'htm' => 'text/html', 'html' => 'text/html', 'pdf' => 'application/pdf', 'doc' => 'application/msword', 'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'ppt' => 'application/vnd.ms-powerpoint', 'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'xls' => 'application/vnd.ms-excel', 'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'ps' => 'image/psd', 'eps' => 'application/postscript', 'log' => 'text/plain', 'csv' => 'text/csv', 'ics' => 'text/calendar', 'xml' => 'text/xml');
 	
 	/**
-	 * Maximum attachment size see: http://developer.postmarkapp.com/developer-build.html#attachments
+	 * Maximum attachment size, 10mb, see: http://developer.postmarkapp.com/developer-build.html#attachments
 	 * @var int
 	 */
-	private $maxAttachmentSize = 0;
+	private $maxAttachmentSize = 10485760;
 	
 	/**
 	 * Array of attachments
