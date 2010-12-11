@@ -15,7 +15,7 @@ class Postmark{
 	private $apiEndPoint = 'http://api.postmarkapp.com/email';
 	
 	/**
-	 * API Key [defauly is the test API key]
+	 * API Key [default is the test API key]
 	 * @var String
 	 */
 	private $apiKey = 'POSTMARK_API_TEST';
@@ -345,7 +345,7 @@ class Postmark{
 		{
 			// this method is currently untested
 			$request = "curl -X POST \"{$this->apiEndPoint}\" -H \"Accept: application/json\" -H \"Content-Type: application/json\" -H \"X-Postmark-Server-Token: {$this->apiKey}\" -v -d \"{$email}\"";
-			$handle = popen('curl example.com', 'r');
+			$handle = popen( $request, 'r');
 			$response = fread($handle, 2096);
 			pclose($handle);
 		}
