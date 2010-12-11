@@ -125,10 +125,9 @@ class Postmark{
 	 * @param String $apiKey - if we wish to set the API Key at run-time
 	 * @return void
 	 */
-	public function __construct( $apiKey='' )
+	public function __construct( $apiKey = null )
 	{
-		if( $apiKey != '' )
-		{
+		if(null !== $apiKey){
 			$this->apiKey = $apiKey;
 		}
 	}
