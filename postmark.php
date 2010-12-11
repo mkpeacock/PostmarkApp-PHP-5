@@ -220,38 +220,36 @@ class Postmark{
 	 * @param String $mimeType the mime-type of the file
 	 * @return bool
 	 */
-	public function addAttachment( $fileName, $fileContents, $mimeType='' )
+	public function addAttachment( $fileName, $fileContents, $mimeType = null)
 	{
 		$ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-		if( array_key_exists( $ext, $this->allowedAttachmentTypes ) )
-		{
-			$size = strlen( $fileContents );
-			if( ( $this->totalAttachmentsSize +  $size ) < $this->maxAttachmentSize )
-			{
-				$this->totalAttachmentsSize +=  $size;
-				if( $mimeType == '' )
-				{
-					if( $this->allowedAttachmentTypes[ $ext ] != '' )
-					{
-						$mimeType = $this->allowedAttachmentTypes[ $ext ];
-					}
-					else
-					{
-						$mimeType = 'application/octet-stream';
-					}
-				}
-				$this->attachments[] = array( 'Name' => $fileName, 'Content' => base64_encode( $fileContents ), 'ContentType' => $mimeType );
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
+		
+		if(false === array_key_exists( $ext, $this->allowedAttachmentTypes )){
 			return false;
 		}
+		
+		$size = strlen( $fileContents );
+		
+		if( ( $this->totalAttachmentsSize +  $size ) > $this->maxAttachmentSize ){
+			return false;
+		}
+
+		$this->totalAttachmentsSize +=  $size;
+		
+		if(null === $mimeType && false === array_key_exists($ext, $this->allowedAttachmentTypes)){
+			$mimeType = 'application/octet-stream';
+		}
+		
+		array_push(
+			$this->attachments,
+			array(
+				'Name'			=> $fileName,
+				'Content'		=> base64_encode($fileContents),
+				'ContentType'	=> $mimeType
+			)
+		);
+		
+		return true;
 	}
 	
 	/**
