@@ -367,14 +367,7 @@ class Postmark{
 	 */
 	private function verifyEmail( $email )
 	{
-		if( ! preg_match( "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})^", $email ) )
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return false !== filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
 	
 	
