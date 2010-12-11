@@ -138,9 +138,9 @@ class Postmark{
 	 * @param String $name
 	 * @return void
 	 */
-	public function setSender( $email, $name='' )
+	public function setSender( $email, $name = null )
 	{
-		$this->sender = ( $name == '' ) ? $email : "{$name} <{$email}>";
+		$this->sender = $this->formatEmailHeader($email, $name);
 	}	
 	
 	/**
@@ -159,13 +159,13 @@ class Postmark{
 	 * @param String $name their name
 	 * @return void
 	 */
-	public function addRecipient( $email, $name='', $type='to' )
+	public function addRecipient( $email, $name = null, $type='to' )
 	{
 		if( array_key_exists( $type, $this->recipients ) )
 		{
 			if( $this->verifyEmail( $email ) )
 			{
-				$this->recipients[ $type ][] = $name == '' ? $email : "{$name} <{$email}>";
+				$this->recipients[ $type ][] = $this->formatEmailHeader($email, $name);
 			}
 		}
 	}
@@ -176,11 +176,11 @@ class Postmark{
 	 * @param String $name the name
 	 * @return void
 	 */
-	public function setReplyTo( $email, $name='' )
+	public function setReplyTo( $email, $name = null )
 	{
 		if( $this->verifyEmail( $email ) )
 		{
-			$this->replyTo = $name == '' ? $email : "{$name} <{$email}>";
+			$this->replyTo = $this->formatEmailHeader($email, $name);
 		}
 		
 	}
@@ -262,7 +262,7 @@ class Postmark{
 	{
 		if( $this->sender == '' )
 		{
-			$this->sender = ( $this->defaultSenderName == '' ) ? $this->defaultSenderEmail : "{$this->defaultSenderName} <{$this->defaultSenderEmail}>";
+			$this->sender = $this->formatEmailHeader($this->defaultSenderEmail, $this->defaultSenderName);
 		}
 		
 		$email = array();
@@ -357,6 +357,21 @@ class Postmark{
 	public function getResponse()
 	{
 		return $this->response;
+	}
+	
+	/**
+	 *Returns a formatted string to use in email header
+	 *
+	 *@param String $email
+	 *@param String $name
+	 *@return String
+	 */
+	private function formatEmailHeader($email, $name = null)
+	{
+		if(null !== $name){
+			return $email . ' <' . $name . '>' ;
+		}
+		return $email;
 	}
 	
 	/**
